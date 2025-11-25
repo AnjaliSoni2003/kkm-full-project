@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKMCars – Login / Signup</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-left">
+            <img src="assets/images/img.jpg" alt="Luxury Car" class="auth-image" onerror="this.style.display='none'">
+            <div class="auth-text">
+                <h2>Vision Mercedes-Maybach 6</h2>
+                <p>Ultra-stylish luxury-class coupé.</p>
+            </div>
+        </div>
+
+        <div class="auth-right">
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="signInTab">Sign In</button>
+                <button class="auth-tab" id="signUpTab">Sign Up</button>
+            </div>
+
+            <!-- Messages -->
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <div class="auth-forms">
+                <!-- Sign In Form -->
+                <form class="auth-form active" id="signInForm">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input id="signin-username" type="text" placeholder="Enter username" required autocomplete="username">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input id="signin-password" type="password" placeholder="Enter password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In</button>
+                </form>
+
+                <!-- Sign Up Form -->
+                <form class="auth-form" id="signUpForm">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input id="signup-fullname" type="text" placeholder="Enter full name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input id="signup-username" type="text" placeholder="Enter username" required autocomplete="username">
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input id="signup-email" type="email" placeholder="Enter email" required autocomplete="email">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input id="signup-password" type="password" placeholder="Create password" required autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:5000/api";
+
+        // ----- DOM Elements -----
+        const signInTab = document.getElementById("signInTab");
+        const signUpTab = document.getElementById("signUpTab");
+        const signInForm = document.getElementById("signInForm");
+        const signUpForm = document.getElementById("signUpForm");
+        const authForms = document.querySelectorAll(".auth-form");
+        const authTabs = document.querySelectorAll(".auth-tab");
+        const errorMessage = document.getElementById("errorMessage");
+        const successMessage = document.getElementById("successMessage");
+
+        // ----- Helper Functions -----
+        function showError(message) {
+            console.error("Error:", message);
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            console.log("Success:", message);
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // ----- Tab Switching -----
+        function switchTab(tab) {
+            authTabs.forEach(t => t.classList.remove("active"));
+            authForms.forEach(f => f.classList.remove("active"));
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            if (tab === "signin") {
+                signInTab.classList.add("active");
+                signInForm.classList.add("active");
+            } else {
+                signUpTab.classList.add("active");
+                signUpForm.classList.add("active");
+            }
+        }
+
+        signInTab.addEventListener("click", () => switchTab("signin"));
+        signUpTab.addEventListener("click", () => switchTab("signup"));
+
+        // ----- Sign In -----
+        signInForm.addEventListener("submit", async(e) => {
+            e.preventDefault();
+
+            const username = document.getElementById("signin-username").value.trim();
+            const password = document.getElementById("signin-password").value.trim();
+
+            if (!username || !password) {
+                showError("Please enter both username and password.");
+                return;
+            }
+
+            const submitBtn = signInForm.querySelector('.auth-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing in...';
+            submitBtn.disabled = true;
+
+            try {
+                console.log(" Attempting login for username:", username);
+
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    }),
+                });
+
+                console.log(" Response status:", res.status);
+                const data = await res.json();
+                console.log(" Response data:", data);
+
+                if (res.ok && data.ok && data.user && data.token) {
+                    console.log(" Login successful!");
+
+                    // Store credentials
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("username", data.user.username);
+                    localStorage.setItem("user_id", data.user.id);
+                    localStorage.setItem("user_email", data.user.email);
+                    localStorage.setItem("user_fullname", data.user.full_name || "");
+
+                    console.log("💾 Data stored in localStorage");
+
+                    showSuccess("Login successful! Redirecting...");
+
+                    // Redirect after a short delay
+                    console.log("🔄 Redirecting to index.html in 1 second...");
+                    setTimeout(() => {
+                        console.log("➡️ Redirecting now...");
+                        window.location.href = "index.html";
+                    }, 1000);
+                } else {
+                    console.error(" Login failed:", data.msg);
+                    showError(data.msg || "Login failed. Please check your credentials.");
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (err) {
+                console.error(" Login error:", err);
+                showError("Cannot connect to server. Please ensure the server is running on http://127.0.0.1:5000");
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // ----- Sign Up -----
+        signUpForm.addEventListener("submit", async(e) => {
+            e.preventDefault();
+
+            const full_name = document.getElementById("signup-fullname").value.trim();
+            const username = document.getElementById("signup-username").value.trim();
+            const email = document.getElementById("signup-email").value.trim();
+            const password = document.getElementById("signup-password").value.trim();
+
+            if (!full_name || !username || !email || !password) {
+                showError("All fields are required.");
+                return;
+            }
+
+            // Basic email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError("Please enter a valid email address.");
+                return;
+            }
+
+            // Password strength check
+            if (password.length < 6) {
+                showError("Password must be at least 6 characters long.");
+                return;
+            }
+
+            const submitBtn = signUpForm.querySelector('.auth-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing up...';
+            submitBtn.disabled = true;
+
+            try {
+                console.log("Attempting signup for username:", username);
+
+                const res = await fetch(`${API_BASE}/signup`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        full_name,
+                        username,
+                        email,
+                        password
+                    }),
+                });
+
+                console.log(" Response status:", res.status);
+                const data = await res.json();
+                console.log("Response data:", data);
+
+                if (res.ok && data.ok) {
+                    console.log("Signup successful!");
+                    showSuccess("Signup successful! Please sign in with your credentials.");
+
+                    // Clear form
+                    signUpForm.reset();
+
+                    // Switch to sign in tab after delay
+                    setTimeout(() => {
+                        switchTab("signin");
+                        // Pre-fill username
+                        document.getElementById("signin-username").value = username;
+                        document.getElementById("signin-username").focus();
+                    }, 2000);
+                } else {
+                    console.error("Signup failed:", data.msg);
+                    showError(data.msg || "Signup failed. Please try again.");
+                }
+
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            } catch (err) {
+                console.error(" Signup error:", err);
+                showError("Cannot connect to server. Please ensure the server is running on http://127.0.0.1:5000");
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // ----- Check if already logged in -----
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log(" Page loaded");
+
+            const token = localStorage.getItem("token");
+            const username = localStorage.getItem("username");
+
+            if (token && username) {
+                console.log("User already logged in:", username);
+                console.log("Token exists:", token.substring(0, 20) + "...");
+                // Auto-redirect to home page if already logged in
+                // Uncomment the line below if you want automatic redirect
+                // window.location.href = "index.html";
+            } else {
+                console.log(" No user logged in");
+            }
+        });
+
+        // Add enter key support for better UX
+        document.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                const activeForm = document.querySelector(".auth-form.active");
+                if (activeForm) {
+                    activeForm.querySelector(".auth-btn").click();
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Car Details | KKMCars</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/cardetails.css">
+    <!-- <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url("assets/images/Background.jpg") center/cover fixed no-repeat;
+            margin: 0;
+            padding-top: 80px;
+        }
+        
+        .car-details {
+            display: flex;
+            gap: 40px;
+            background: #fff;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+            max-width: 1100px;
+            width: 90%;
+            margin: 40px auto;
+            flex-wrap: wrap;
+        }
+        
+        .car-gallery {
+            flex: 1;
+            min-width: 320px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 380px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .main-image img:hover {
+            transform: scale(1.05);
+        }
+        
+        .thumbnail-images {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .thumbnail-images img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .thumbnail-images img:hover {
+            border-color: #aac7ff;
+            transform: translateY(-2px);
+        }
+        
+        .thumbnail-images img.active {
+            border-color: #1572ff;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(21, 114, 255, 0.3);
+        }
+        
+        .car-info {
+            flex: 1;
+            min-width: 320px;
+        }
+        
+        .car-info h2 {
+            margin: 0 0 12px;
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .car-price {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1177ff;
+            margin-bottom: 18px;
+        }
+        
+        .specs {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .specs p {
+            margin: 10px 0;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .specs strong {
+            color: #555;
+            min-width: 120px;
+            display: inline-block;
+        }
+        
+        .contact-form {
+            background: #f1f5ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 24px;
+        }
+        
+        .contact-form h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #1572ff;
+        }
+        
+        .contact-form button {
+            padding: 12px 24px;
+            background: #1572ff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .contact-form button:hover {
+            background: #0d5dd8;
+        }
+        
+        .contact-form button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        #contactResult {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        #contactResult.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        #contactResult.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        @media (max-width:900px) {
+            .car-details {
+                flex-direction: column;
+            }
+            .main-image {
+                height: 260px;
+            }
+            .thumbnail-images {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .thumbnail-images img {
+                height: 60px;
+            }
+        }
+        
+        @media (max-width:500px) {
+            .thumbnail-images {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style> -->
+</head>
+
+<body>
+    <section class="car-details" id="carDetailsSection">
+        <div class="loading">
+            <p>Loading car details...</p>
+        </div>
+    </section>
+
+    <!-- Load script.js FIRST -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- Car Detail Page Specific Scripts -->
+    <script>
+        // Set flag to identify this as car detail page
+        window.isCarDetailPage = true;
+
+        // Use API_BASE from script.js (already declared there)
+        const API_BASE_DETAIL = "http://127.0.0.1:5000";
+        const params = new URLSearchParams(window.location.search);
+        const carId = params.get('id');
+        const el = id => document.getElementById(id);
+
+        console.log(" Car Details page loaded");
+        console.log(" Car ID:", carId);
+
+        // Initialize car detail page - called after header/footer loads
+        window.initCarDetailPage = async function() {
+            console.log(" Initializing car detail page...");
+
+            if (carId) {
+                await loadCar(carId);
+            } else {
+                document.getElementById('carDetailsSection').innerHTML =
+                    '<div style="padding:30px;color:#b00020;text-align:center;"><h3>⚠️ No car selected</h3><p>Please select a car from the listings page.</p><a href="buy.html" style="color:#1572ff;">← Back to Listings</a></div>';
+            }
+
+            console.log(" Car detail page initialized");
+        };
+
+        async function loadCar(id) {
+            try {
+                console.log(` Fetching car details for ID: ${id}`);
+                const res = await fetch(`${API_BASE_DETAIL}/api/cars/${id}`);
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                const car = await res.json();
+                console.log(" Car data received:", car);
+                console.log(" Full car object:", JSON.stringify(car, null, 2));
+
+                renderCar(car);
+            } catch (err) {
+                console.error(" Error loading car:", err);
+                document.getElementById('carDetailsSection').innerHTML =
+                    '<div style="padding:30px;color:#b00020;text-align:center;"><h3>⚠️ Car not found or failed to load</h3><p>Please check if the car ID is correct and try again.</p><a href="buy.html" style="color:#1572ff;">← Back to Listings</a></div>';
+            }
+        }
+
+        function prepareImages(car) {
+            let images = [];
+            const placeholder = 'assets/images/placeholder.jpg';
+
+            console.log(" Checking for images in car object...");
+
+            // Method 1: Check for images array from backend
+            if (car.images && Array.isArray(car.images)) {
+                console.log("Found images array:", car.images);
+                images = car.images.filter(img => img && img.trim() !== '');
+            }
+
+            // Method 2: Check for individual image fields
+            if (images.length === 0) {
+                console.log("Images array empty or not found. Checking individual fields...");
+                const imageFields = ['image1', 'image2', 'image3', 'image4'];
+
+                imageFields.forEach(field => {
+                    if (car[field] && car[field].trim() !== '') {
+                        console.log(` Found ${field}:`, car[field]);
+                        images.push(car[field]);
+                    }
+                });
+            }
+
+            // Method 3: Check for single image_url
+            if (images.length === 0 && car.image_url) {
+                console.log("Found image_url:", car.image_url);
+                images.push(car.image_url);
+            }
+
+            // Method 4: Check for generic 'image' field
+            if (images.length === 0 && car.image) {
+                console.log(" Found image field:", car.image);
+                images.push(car.image);
+            }
+
+            console.log(` Total images found: ${images.length}`, images);
+
+            // Remove duplicates
+            images = [...new Set(images)];
+            console.log(`Images after removing duplicates: ${images.length}`, images);
+
+            // Fill remaining slots with placeholder or first image
+            const firstImage = images.length > 0 ? images[0] : placeholder;
+            while (images.length < 4) {
+                images.push(images.length === 0 ? placeholder : images[0]);
+            }
+
+            // Use exactly 4 images
+            const finalImages = images.slice(0, 4);
+            console.log("Final images prepared (4 slots):", finalImages);
+
+            return finalImages;
+        }
+
+        function renderCar(car) {
+            console.log(" Rendering car details");
+
+            const images = prepareImages(car);
+            console.log(" Images to display:", images);
+
+            // Build the HTML
+            const html = `
+                <div class="car-gallery">
+                    <div class="main-image">
+                        <img id="mainCarImage" src="${images[0]}" alt="${car.name || 'Car'}" onerror="this.src='assets/images/placeholder.jpg'">
+                    </div>
+                    <div class="thumbnail-images" id="thumbs">
+                        <img src="${images[0]}" data-index="0" class="active" alt="Car image 1" onerror="this.src='assets/images/placeholder.jpg'">
+                        <img src="${images[1]}" data-index="1" alt="Car image 2" onerror="this.src='assets/images/placeholder.jpg'">
+                        <img src="${images[2]}" data-index="2" alt="Car image 3" onerror="this.src='assets/images/placeholder.jpg'">
+                        <img src="${images[3]}" data-index="3" alt="Car image 4" onerror="this.src='assets/images/placeholder.jpg'">
+                    </div>
+                </div>
+
+                <div class="car-info">
+                    <h2 id="carName">${car.name || 'Unknown Car'}</h2>
+                    <p class="car-price" id="carPrice">${car.price ? '₹' + Number(car.price).toLocaleString('en-IN') : 'Price on Request'}</p>
+                    
+                    <div class="specs" id="specs">
+                        ${car.brand ? `<p><strong>Brand:</strong> ${car.brand}</p>` : ''}
+                        ${car.year ? `<p><strong>Year:</strong> ${car.year}</p>` : ''}
+                        ${car.fuel_type ? `<p><strong>Fuel Type:</strong> ${car.fuel_type}</p>` : ''}
+                        ${car.transmission ? `<p><strong>Transmission:</strong> ${car.transmission}</p>` : ''}
+                        ${car.mileage ? `<p><strong>Mileage:</strong> ${car.mileage}</p>` : ''}
+                        ${car.location ? `<p><strong>Location:</strong> ${car.location}</p>` : ''}
+                        ${car.description ? `<p><strong>Description:</strong> ${car.description}</p>` : ''}
+                    </div>
+
+                    <div class="contact-form">
+                        <h3>Contact Dealer</h3>
+                        <form id="contactForm" data-car-name="${car.name || ''}">
+                            <input id="buyerName" type="text" placeholder="Your Name" required>
+                            <input id="buyerContact" type="email" placeholder="Your Email" required>
+                            <textarea id="buyerMsg" rows="4" placeholder="Your Message (Optional)"></textarea>
+                            <button type="submit">Send Message</button>
+                        </form>
+                        <div id="contactResult"></div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('carDetailsSection').innerHTML = html;
+            
+            // Add click handlers for thumbnails
+            setupImageGallery(images);
+            
+            // Setup contact form
+            setupContactForm();
+            
+            console.log(" Car details rendered successfully");
+        }
+
+        function setupImageGallery(images) {
+            const mainImage = document.getElementById('mainCarImage');
+            const thumbnails = document.querySelectorAll('#thumbs img');
+            
+            console.log(" Setting up image gallery with", thumbnails.length, "thumbnails");
+            
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', function() {
+                    console.log(` Clicked thumbnail ${index + 1}`);
+                    
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                    
+                    // Update main image
+                    const newImageSrc = images[index];
+                    console.log(` Changing main image to: ${newImageSrc}`);
+                    mainImage.src = newImageSrc;
+                });
+            });
+        }
+
+        function setupContactForm() {
+            const contactForm = document.getElementById('contactForm');
+            const contactResult = document.getElementById('contactResult');
+            
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('buyerName').value.trim();
+                const email = document.getElementById('buyerContact').value.trim();
+                const message = document.getElementById('buyerMsg').value.trim();
+                const carName = this.dataset.carName || '';
+                
+                if (!name || !email) {
+                    showMessage('Please provide your name and email.', 'error');
+                    return;
+                }
+                
+                // Disable submit button
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                
+                try {
+                    console.log(" Sending contact message");
+                    
+                    const payload = {
+                        username: name,
+                        email: email,
+                        message: `Interested in: ${carName}\n\nMessage: ${message || 'No additional message'}`
+                    };
+                    
+                    const res = await fetch(`${API_BASE_DETAIL}/api/send_message`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const data = await res.json();
+                    console.log(" Response:", data);
+                    
+                    if (res.ok && data.ok) {
+                        showMessage('Message sent successfully! The dealer will contact you soon.', 'success');
+                        contactForm.reset();
+                    } else {
+                        showMessage(data.msg || ' Failed to send message. Please try again.', 'error');
+                    }
+                } catch (err) {
+                    console.error(" Error sending message:", err);
+                    showMessage(' Failed to send message. Please check your connection and try again.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                }
+            });
+        }
+
+        function showMessage(text, type) {
+            const contactResult = document.getElementById('contactResult');
+            contactResult.textContent = text;
+            contactResult.className = type;
+            contactResult.style.display = 'block';
+            
+            setTimeout(() => {
+                contactResult.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>

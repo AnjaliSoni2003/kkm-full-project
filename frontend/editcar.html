@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Car | KKMCars Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1d2e;
+            color: #e4e4e7;
+            overflow-x: hidden;
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #22264b;
+            padding: 20px;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 8px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #9ca3af;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #2d3254;
+            color: #fff;
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.2) 0%, transparent 100%);
+            border-left: 3px solid #667eea;
+            color: #fff;
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #764ba2;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #2d3254;
+            color: #e4e4e7;
+        }
+        
+        .btn-secondary:hover {
+            background: #3d4264;
+        }
+        
+        .card {
+            background: #22264b;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #2d3254;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            background: #1a1d2e;
+            border: 1px solid #2d3254;
+            border-radius: 8px;
+            padding: 12px;
+            color: #e4e4e7;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .image-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .image-upload-item {
+            background: #1a1d2e;
+            border: 2px dashed #2d3254;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .image-upload-item:hover {
+            border-color: #667eea;
+        }
+        
+        .image-upload-item label {
+            display: block;
+            color: #9ca3af;
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .image-upload-item input[type="file"] {
+            display: none;
+        }
+        
+        .upload-placeholder {
+            width: 100%;
+            height: 120px;
+            background: #22264b;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-placeholder:hover {
+            background: #2d3254;
+        }
+        
+        .preview-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .remove-image:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        .image-upload-item:hover .remove-image {
+            display: flex;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.active {
+            display: block;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="dashboard.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-car"></i></div>
+            <span>KKMCars</span>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="fa-solid fa-chart-line nav-icon"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="cars.html" class="nav-link">
+                    <i class="fa-solid fa-car nav-icon"></i> Cars
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="messages.html" class="nav-link">
+                    <i class="fa-solid fa-message nav-icon"></i> Messages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="sell-requests.html" class="nav-link">
+                    <i class="fa-solid fa-clipboard-list nav-icon"></i> Sell Requests
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Dashboard</a>
+            <span>›</span>
+            <a href="cars.html">Cars</a>
+            <span>›</span>
+            <span>Edit Car</span>
+        </div>
+
+        <div class="header">
+            <h1>Edit Car</h1>
+            <a href="cars.html" class="btn btn-secondary">
+                <span>←</span> Back to Cars
+            </a>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div id="loadingBox" class="loading">
+            <div style="font-size: 40px; margin-bottom: 10px;">⏳</div>
+            <p>Loading car details...</p>
+        </div>
+
+        <div class="card" id="editCardContainer" style="display: none;">
+            <div class="card-header">
+                <h2 class="card-title">Car Information</h2>
+            </div>
+            <form id="editCarForm">
+                <input type="hidden" id="carId" name="car_id">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Car Name *</label>
+                        <input type="text" id="carName" name="name" class="form-control" placeholder="e.g., BMW 3 Series" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <input type="text" id="carBrand" name="brand" class="form-control" placeholder="e.g., BMW">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="number" id="carYear" name="year" class="form-control" placeholder="e.g., 2023">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="carPrice" name="price" class="form-control" placeholder="e.g., 4500000">
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <input type="text" id="carFuelType" name="fuel_type" class="form-control" placeholder="e.g., Petrol">
+                    </div>
+                    <div class="form-group">
+                        <label>Transmission</label>
+                        <input type="text" id="carTransmission" name="transmission" class="form-control" placeholder="e.g., Automatic">
+                    </div>
+                    <div class="form-group">
+                        <label>Mileage</label>
+                        <input type="text" id="carMileage" name="mileage" class="form-control" placeholder="e.g., 15 km/l">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="carLocation" name="location" class="form-control" placeholder="e.g., Mumbai">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="carDescription" name="description" class="form-control" placeholder="Enter car description..."></textarea>
+                </div>
+
+                <div class="card-header" style="margin-top: 30px;">
+                    <h2 class="card-title">Car Images</h2>
+                </div>
+
+                <div class="image-upload-grid">
+                    <div class="image-upload-item">
+                        <label for="image1">Image 1 (Main)</label>
+                        <input type="file" id="image1" name="image1" accept="image/*">
+                        <button type="button" class="remove-image" onclick="removeImage(1)">×</button>
+                        <div class="upload-placeholder" id="placeholder1" onclick="document.getElementById('image1').click()">
+                            <span id="icon1"><i class="fa-solid fa-camera"></i></span>
+                        </div>
+                        <img id="preview1" style="display: none;" class="preview-image" onclick="document.getElementById('image1').click()">
+                    </div>
+                    <div class="image-upload-item">
+                        <label for="image2">Image 2</label>
+                        <input type="file" id="image2" name="image2" accept="image/*">
+                        <button type="button" class="remove-image" onclick="removeImage(2)">×</button>
+                        <div class="upload-placeholder" id="placeholder2" onclick="document.getElementById('image2').click()">
+                            <span id="icon2"><i class="fa-solid fa-camera"></i></span>
+                        </div>
+                        <img id="preview2" style="display: none;" class="preview-image" onclick="document.getElementById('image2').click()">
+                    </div>
+                    <div class="image-upload-item">
+                        <label for="image3">Image 3</label>
+                        <input type="file" id="image3" name="image3" accept="image/*">
+                        <button type="button" class="remove-image" onclick="removeImage(3)">×</button>
+                        <div class="upload-placeholder" id="placeholder3" onclick="document.getElementById('image3').click()">
+                            <span id="icon3"><i class="fa-solid fa-camera"></i></span>
+                        </div>
+                        <img id="preview3" style="display: none;" class="preview-image" onclick="document.getElementById('image3').click()">
+                    </div>
+                    <div class="image-upload-item">
+                        <label for="image4">Image 4</label>
+                        <input type="file" id="image4" name="image4" accept="image/*">
+                        <button type="button" class="remove-image" onclick="removeImage(4)">×</button>
+                        <div class="upload-placeholder" id="placeholder4" onclick="document.getElementById('image4').click()">
+                            <span id="icon4"><i class="fa-solid fa-camera"></i></span>
+                        </div>
+                        <img id="preview4" style="display: none;" class="preview-image" onclick="document.getElementById('image4').click()">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <span><i class="fa-solid fa-check"></i></span> Update Car
+                    </button>
+                    <a href="cars.html" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL = "http://127.0.0.1:5000";
+
+        // Get car ID from URL parameter
+        function getCarIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type} active`;
+            setTimeout(() => {
+                alertBox.classList.remove('active');
+            }, 5000);
+        }
+
+        // Image Preview
+        for (let i = 1; i <= 4; i++) {
+            const fileInput = document.getElementById(`image${i}`);
+            const preview = document.getElementById(`preview${i}`);
+            const placeholder = document.getElementById(`placeholder${i}`);
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        preview.src = event.target.result;
+                        preview.style.display = 'block';
+                        placeholder.style.display = 'none';
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+        }
+
+        // Remove image
+        function removeImage(index) {
+            const preview = document.getElementById(`preview${index}`);
+            const placeholder = document.getElementById(`placeholder${index}`);
+            const fileInput = document.getElementById(`image${index}`);
+
+            preview.style.display = 'none';
+            placeholder.style.display = 'flex';
+            fileInput.value = '';
+            preview.src = '';
+        }
+
+        // Load existing image into preview
+        function loadExistingImage(index, imageUrl) {
+            const preview = document.getElementById(`preview${index}`);
+            const placeholder = document.getElementById(`placeholder${index}`);
+
+            console.log(`Loading image ${index}:`, imageUrl);
+
+            if (imageUrl && imageUrl.trim() !== '' && imageUrl !== 'null' && imageUrl !== 'undefined') {
+                preview.src = imageUrl;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+
+                preview.onerror = function() {
+                    console.error(`Failed to load image ${index}:`, imageUrl);
+                    preview.style.display = 'none';
+                    placeholder.style.display = 'flex';
+                };
+
+                preview.onload = function() {
+                    console.log(`Image ${index} loaded successfully`);
+                };
+            } else {
+                console.log(`No valid URL for image ${index}`);
+            }
+        }
+
+        // Load car data
+        async function loadCarData() {
+            const carId = getCarIdFromURL();
+
+            if (!carId) {
+                showAlert('No car ID provided. Redirecting...', 'error');
+                setTimeout(() => {
+                    window.location.href = 'cars.html';
+                }, 2000);
+                return;
+            }
+
+            document.getElementById('loadingBox').classList.add('active');
+
+            try {
+                const res = await fetch(`${BASE_URL}/api/cars/${carId}`);
+
+                if (!res.ok) {
+                    throw new Error('Car not found');
+                }
+
+                const car = await res.json();
+
+                console.log('Full car data:', car);
+                console.log('Image URLs:', {
+                    image1: car.image_url,
+                    image2: car.image_url_2,
+                    image3: car.image_url_3,
+                    image4: car.image_url_4
+                });
+
+                // Populate form fields
+                document.getElementById('carId').value = car.id;
+                document.getElementById('carName').value = car.name || '';
+                document.getElementById('carBrand').value = car.brand || '';
+                document.getElementById('carYear').value = car.year || '';
+                document.getElementById('carPrice').value = car.price || '';
+                document.getElementById('carFuelType').value = car.fuel_type || '';
+                document.getElementById('carTransmission').value = car.transmission || '';
+                document.getElementById('carMileage').value = car.mileage || '';
+                document.getElementById('carLocation').value = car.location || '';
+                document.getElementById('carDescription').value = car.description || '';
+
+                // Load ALL existing images - checking multiple possible field names
+                const imageFields = [{
+                    index: 1,
+                    urls: [car.image_url, car.image1, car.image_1]
+                }, {
+                    index: 2,
+                    urls: [car.image_url_2, car.image2, car.image_2]
+                }, {
+                    index: 3,
+                    urls: [car.image_url_3, car.image3, car.image_3]
+                }, {
+                    index: 4,
+                    urls: [car.image_url_4, car.image4, car.image_4]
+                }];
+
+                imageFields.forEach(field => {
+                    const validUrl = field.urls.find(url => url && url.trim() !== '');
+                    if (validUrl) {
+                        loadExistingImage(field.index, validUrl);
+                    }
+                });
+
+                document.getElementById('loadingBox').classList.remove('active');
+                document.getElementById('editCardContainer').style.display = 'block';
+
+            } catch (err) {
+                console.error("Load Car Error:", err);
+                showAlert('Error loading car data: ' + err.message, 'error');
+                document.getElementById('loadingBox').classList.remove('active');
+                setTimeout(() => {
+                    window.location.href = 'cars.html';
+                }, 2000);
+            }
+        }
+
+        // Update car
+        document.getElementById("editCarForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const carId = document.getElementById('carId').value;
+            const formData = new FormData(this);
+
+            try {
+                const res = await fetch(`${BASE_URL}/api/update_car/${carId}`, {
+                    method: "PUT",
+                    body: formData
+                });
+
+                const data = await res.json();
+
+                if (res.ok || data.ok) {
+                    showAlert('Car updated successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'cars.html';
+                    }, 1500);
+                } else {
+                    showAlert('Error: ' + (data.msg || data.error || 'Unknown error'), 'error');
+                }
+            } catch (err) {
+                console.error("Update Car Error:", err);
+                showAlert('Error updating car: ' + err.message, 'error');
+            }
+        });
+
+        // Load car data on page load
+        loadCarData();
+    </script>
+</body>
+
+</html>

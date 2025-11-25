@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KKMCars - Find Your Perfect Car</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+
+    <!-- Hero Section -->
+
+    <section class="hero-3d">
+        <div class="hero-3d-container">
+            <div class="hero-3d-box">
+                <div class="hero-3d-content">
+                    <h1>Best Used Cars in Town</h1>
+                    <p>Discover the best deals on your dream car with KKM Cars. Quality vehicles at competitive prices.</p>
+                    <div class="hero-buttons">
+                        <a href="buy.html" class="btn btn-primary">Browse Cars</a>
+                        <a href="sell.html" class="btn btn-secondary">Sell Your Car</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Premium Brands Section -->
+
+    <!-- <section class="brands">
+        <h2>All Brands</h2>
+        <div class="brand-grid" id="brandGrid">
+            <div class="brand-card"><img src="assets/images/maruti.jpg" alt="Maruti Suzuki">
+                <p>Maruti Suzuki</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/mahindra.jpg" alt="Mahindra">
+                <p>Mahindra</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/tata.jpg" alt="Tata">
+                <p>Tata</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/honda.jpg" alt="Hyundai">
+                <p>Honda</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/toyota.jpg" alt="Toyota">
+                <p>Toyota</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/kia.jpg" alt="Kia">
+                <p>Kia</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/skoda.jpg" alt="Skoda">
+                <p>Skoda</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/bmw.jpg" alt="BMW">
+                <p>BMW</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/citroen.jpg" alt="Citroen">
+                <p>Citroen</p>
+            </div>
+            <div class="brand-card"><img src="assets/images/Renault.jpg" alt="Renault">
+                <p>Renault</p>
+            </div> -->
+
+
+    <!-- Hidden brands initially -->
+
+    <!-- <div class="brand-card hidden"><img src="assets/images/logo audi.jpg" alt="Audi">
+        <p>Audi</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/Mercedes-Benz.jpg" alt="Mercedes">
+        <p>Mercedes</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/Nissan logo.jpg" alt="Nissan">
+        <p>Nissan</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/mg.jpg" alt="MG">
+        <p>MG</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/JEEP.jpg" alt="MG">
+        <p>Jeep</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/BYD Logo.jpg" alt="MG">
+        <p>BYD</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/VOLVO from Sweden.jpg" alt="MG">
+        <p>Volvo</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/JEEP.jpg" alt="MG">
+        <p>Jeep</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/Porsche.jpg" alt="MG">
+        <p>Porsche</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/Lexus.jpg" alt="MG">
+        <p>Lexus</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/VinFast Logo PNG Vector, Icon Free Download.jpg" alt="MG">
+        <p>Vinfast</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/Lamborghini (Italy) - Yes they made a motorcycle_.jpg" alt="MG">
+        <p>Lamborghini</p>
+    </div>
+    <div class="brand-card hidden"><img src="assets/images/download.jpg" alt="MG">
+        <p>Rolls-Royce</p>
+    </div>
+
+    </div>
+
+    <button id="toggleBrands" class="view-more">View More Brands</button>
+    </section> -->
+
+
+
+    <!-- Explore All Vehicles Section -->
+
+    <section class="vehicles">
+        <div class="section-header">
+            <h2>Explore All Vehicles</h2>
+            <a href="buy.html" class="view-all">View All →</a>
+        </div>
+
+        <div id="vehicleGrid" class="vehicle-grid">
+            <!-- JS will insert .vehicle-card here -->
+        </div>
+
+        <p id="noCarsMsg" style="display:none; text-align:center; margin-top:20px;">No vehicles found.</p>
+    </section>
+
+
+
+    <!-- Sell Your Car Section
+    <section class="sell-car">
+        <div class="sell-container">
+            <div class="sell-left">
+                <img src="assets/images/luxury.jpg" alt="Sell your car" class="sell-image">
+                <button class="play-btn" id="playVideoBtn">&#9658;</button>
+            </div>
+
+            <div class="sell-right">
+                <h2>Get A Fair Price For Your Car<br>Sell To Us Today</h2>
+                <p>
+                    We are committed to providing our customers with exceptional service, competitive pricing, and a wide range of options.
+                </p>
+
+                <ul class="sell-points">
+                    <li>✔ We are the UK's largest provider, with more patrols in more places</li>
+                    <li>✔ You get 24/7 roadside assistance</li>
+                    <li>✔ We fix 4 out of 5 cars at the roadside</li>
+                </ul>
+
+                <a href="sell.html"><button class="get-started">Get Started →</button></a>
+            </div>
+        </div>
+
+        <div class="sell-stats">
+            <div class="stat">
+                <h3>836M</h3>
+                <p>CARS FOR SALE</p>
+            </div>
+            <div class="stat">
+                <h3>738M</h3>
+                <p>DEALER REVIEWS</p>
+            </div>
+            <div class="stat">
+                <h3>100M</h3>
+                <p>VISITORS PER DAY</p>
+            </div>
+            <div class="stat">
+                <h3>238M</h3>
+                <p>VERIFIED DEALERS</p>
+            </div>
+        </div>
+    </section> -->
+
+
+    <!-- <div id="videoModal" class="video-modal">
+        <div class="video-content">
+            <span class="close-btn" id="closeVideoBtn">&times;</span>
+            <video id="carVideo" controls autoplay>
+      <source src="assets/images/car.mp4" type="video/mp4">
+      Your browser does not support HTML video.
+    </video>
+        </div>
+    </div> -->
+
+    <!-- SELL CAR SECTION -->
+    <section class="sell-section">
+
+        <!-- Background Image Container with Zoom Effect -->
+        <div class="sell-background"></div>
+
+        <!-- Dark Overlay -->
+        <div class="overlay"></div>
+
+        <!-- Sell Content (Animated) -->
+        <div class="sell-content">
+            <h2 class="main-title">Sell Your Car with KKM Cars Now</h2>
+            <p>Get the best valuation and hassle-free selling experience today. Trusted by millions.</p>
+            <div class="cta-button-wrapper">
+                <a href="sell.html" class="btn btn-sell-now">Start Selling Today</a>
+            </div>
+        </div>
+    </section>
+    <!-- section for target  -->
+    <section>
+        <div class="counter-section">
+            <div class="stat-item">
+                <div class="stat-number" data-target="836" data-unit="M">0</div>
+                <div class="stat-label">CARS SOLD</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="738" data-unit="M">0</div>
+                <div class="stat-label">HAPPY SELLERS</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="100" data-unit="M">0</div>
+                <div class="stat-label">TRANSPARENCY RATING</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-target="238" data-unit="M">0</div>
+                <div class="stat-label">CITIES COVERED</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="choose-us-section">
+
+        <!-- Section why choose -->
+        <div class="section-header">
+            <h2>Why Choose KKM Cars</h2>
+            <p>Your trusted partner in finding the perfect car</p>
+        </div>
+
+        <!-- Features Grid (3 Columns) -->
+        <div class="features-grid">
+
+            <!-- 1. Verified Cars -->
+            <div class="feature-card">
+                <div class="icon-container">
+                    <!-- SVG Icon for Verification/Shield -->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5l-3.5-3.5 1.41-1.41L11 14.67l5.09-5.09 1.41 1.41-6.5 6.5z" />
+                            </svg>
+                </div>
+                <h3 class="card-title">Verified Cars</h3>
+                <p class="card-description">Every vehicle goes through rigorous inspection for quality assurance and safety standards before listing.</p>
+            </div>
+
+            <!-- 2. Trusted Dealership -->
+            <div class="feature-card">
+                <div class="icon-container">
+                    <!-- SVG Icon for Trust/Medal -->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15.5l-3.5-3.5 1.41-1.41L11 14.67l5.09-5.09 1.41 1.41-6.5 6.5z" />
+                            </svg>
+                </div>
+                <h3 class="card-title">Trusted Dealership</h3>
+                <p class="card-description">Years of experience and thousands of happy customers trust us for transparent and reliable service.</p>
+            </div>
+
+            <!-- 3. Easy Financing -->
+            <div class="feature-card">
+                <div class="icon-container">
+                    <!-- SVG Icon for Financing/Card -->
+                    <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V8h16v10zm-12-6h8v2H8v-2z" />
+                            </svg>
+                </div>
+                <h3 class="card-title">Easy Financing</h3>
+                <p class="card-description">Flexible payment options and low interest rates available to suit your budget and make buying easy.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- DROP-IN SECTION: Testimonials (3 cards x 3 groups, auto-rotate 5s) -->
+    <section class="tst" id="testimonials">
+
+
+        <div class="wrap">
+            <h2 class="title">What our customers say</h2>
+
+            <div class="grid" id="tstGrid">
+                <!-- Group 1 -->
+                <article class="card">
+                    <h3>Great Work <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zm10 0h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="John" src="https://i.pravatar.cc/112?img=12"></div>
+                        <div>
+                            <div class="name">John Doe</div>
+                            <div class="role">Sales Manager</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Great Work <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zm10 0h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Amazing design, easy to customize and a design quality superlative account on its cloud platform for the optimized performance. And we didn’t on our original designs.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Leslie" src="https://i.pravatar.cc/112?img=20"></div>
+                        <div>
+                            <div class="name">Leslie Alexander</div>
+                            <div class="role">Facebook</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Awesome Design <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Floyd" src="https://i.pravatar.cc/112?img=16"></div>
+                        <div>
+                            <div class="name">Floyd Miles</div>
+                            <div class="role">Designer</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Group 2 -->
+                <article class="card">
+                    <h3>Clean Code <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Setup was quick and the defaults were perfect. Performance is excellent out of the box.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Arlene" src="https://i.pravatar.cc/112?img=21"></div>
+                        <div>
+                            <div class="name">Arlene McCoy</div>
+                            <div class="role">Developer</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Super Fast <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Rotating groups keep the page lively without user interaction. Exactly what we needed.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Albert" src="https://i.pravatar.cc/112?img=7"></div>
+                        <div>
+                            <div class="name">Albert Flores</div>
+                            <div class="role">CTO</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Lovely Support <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Helped me get production ready in a day. The components are beautiful and accessible.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Jenny" src="https://i.pravatar.cc/112?img=47"></div>
+                        <div>
+                            <div class="name">Jenny Wilson</div>
+                            <div class="role">Product Manager</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Group 3 -->
+                <article class="card">
+                    <h3>Highly Recommend <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“From desktop to mobile, layout adapts perfectly. No arrows, just smooth auto pages.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Courtney" src="https://i.pravatar.cc/112?img=32"></div>
+                        <div>
+                            <div class="name">Courtney Henry</div>
+                            <div class="role">Founder</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Beautiful UI <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Cards have subtle shadows and spacing so content breathes even on small screens.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Devon" src="https://i.pravatar.cc/112?img=33"></div>
+                        <div>
+                            <div class="name">Devon Lane</div>
+                            <div class="role">UI Engineer</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3>Five Stars <svg class="quoteMark" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M7 7h4v4H9c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7zM17 7h4v4h-2c0 1.657 1.343 3 3 3v3a6 6 0 0 1-6-6V7z" />
+                            </svg></h3>
+                    <p>“Exactly like the requirement: 3 cards on screen, 3 groups, 5 seconds each, looping forever.”</p>
+                    <div class="person">
+                        <div class="avatar"><img alt="Eleanor" src="https://i.pravatar.cc/112?img=5"></div>
+                        <div>
+                            <div class="name">Eleanor Pena</div>
+                            <div class="role">Marketer</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="dots" aria-hidden="true" id="tstDots"></div>
+        </div>
+
+    </section>
+
+
+    <!-- Why Choose KKM Cars Section
+    <section class="kkm-why-choose">
+        <h2>Why Choose KKM Cars</h2>
+        <div class="kkm-features">
+            <div class="kkm-feature-card">
+                <i class="fas fa-handshake fa-2x"></i>
+                <h3>Trust</h3>
+                <p>We build lasting relationships with our customers through transparency and integrity.</p>
+            </div>
+            <div class="kkm-feature-card">
+                <i class="fas fa-car-side fa-2x"></i>
+                <h3>Verified Cars</h3>
+                <p>All our vehicles go through a rigorous verification process for your peace of mind.</p>
+            </div>
+            <div class="kkm-feature-card">
+                <i class="fas fa-credit-card fa-2x"></i>
+                <h3>Easy Financing</h3>
+                <p>Flexible and hassle-free financing options to make car buying stress-free.</p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- CUSTOMER REVIEWS  SECTION -->
+
+    <!-- ===== Footer Section ===== -->
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+        const toggleBtn = document.getElementById("toggleBrands");
+        const hiddenBrands = document.querySelectorAll(".brand-card.hidden");
+        let expanded = false;
+
+        toggleBtn.addEventListener("click", () => {
+            expanded = !expanded;
+
+            hiddenBrands.forEach(brand => {
+                brand.style.display = expanded ? "block" : "none";
+            });
+
+            toggleBtn.textContent = expanded ? "View Less Brands" : "View More Brands";
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('toggleBrands');
+            const hiddenBrands = document.querySelectorAll('.brand-card.hidden');
+            let expanded = false;
+
+            toggleBtn.addEventListener('click', () => {
+                expanded = !expanded;
+
+                hiddenBrands.forEach(brand => {
+                    brand.style.display = expanded ? 'block' : 'none';
+                });
+
+                toggleBtn.textContent = expanded ? 'View Less Brands' : 'View More Brands';
+            });
+        });
+
+        // Hero tabs
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                tabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+            });
+        });
+
+        // Vehicle tabs
+        const vehicleTabs = document.querySelectorAll(".vehicle-tab");
+        vehicleTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                vehicleTabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+            });
+        })
+
+        const playBtn = document.getElementById('playVideoBtn');
+        const videoModal = document.getElementById('videoModal');
+        const closeBtn = document.getElementById('closeVideoBtn');
+        const video = document.getElementById('carVideo');
+
+        playBtn.addEventListener('click', () => {
+            videoModal.style.display = 'flex';
+            video.play();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            video.pause();
+            video.currentTime = 0;
+            videoModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside video
+        window.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                video.pause();
+                video.currentTime = 0;
+                videoModal.style.display = 'none';
+            }
+        });
+
+
+        // car details
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("http://localhost:5000/api/cars") //  your Flask endpoint
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById("vehicle-list");
+                    container.innerHTML = ""; // clear previous data
+                    if (data.length === 0) {
+                        container.innerHTML = "<p>No cars available right now.</p>";
+                        return;
+                    }
+
+                    data.forEach(car => {
+                        const card = `
+          <div class="car-card">
+            <img src="${car.image_url}" alt="${car.name}">
+            <h3>${car.name}</h3>
+            <p>Brand: ${car.brand}</p>
+            <p>Price: ₹${car.price}</p>
+          </div>
+        `;
+                        container.innerHTML += card;
+                    });
+                })
+                .catch(err => {
+                    console.error("Error fetching cars:", err);
+                });
+        });
+
+
+        // customer review carousel 
+
+        // Auto-rotate groups (3 cards per group) – scoped to this section only
+        (function() {
+            const root = document.getElementById('testimonials');
+            const grid = root.querySelector('#tstGrid');
+            const cards = Array.from(grid.querySelectorAll('.card'));
+            const dotsWrap = root.querySelector('#tstDots');
+            const GROUP_SIZE = 3;
+            const groups = Math.ceil(cards.length / GROUP_SIZE);
+
+            // dots
+            for (let i = 0; i < groups; i++) {
+                const d = document.createElement('span');
+                d.className = 'dot';
+                dotsWrap.appendChild(d);
+            }
+            const dots = Array.from(dotsWrap.children);
+
+            function showGroup(g) {
+                cards.forEach((card, idx) => {
+                    const inGroup = Math.floor(idx / GROUP_SIZE) === g;
+                    card.style.display = inGroup ? 'block' : 'none';
+                });
+                dots.forEach((d, i) => d.classList.toggle('active', i === g));
+            }
+
+            let current = 0;
+            showGroup(current);
+            setInterval(() => {
+                current = (current + 1) % groups;
+                showGroup(current);
+            }, 5000);
+        })();
+    </script>
+</body>
+
+</html>

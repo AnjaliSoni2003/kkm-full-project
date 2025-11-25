@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | KKMCars</title>
+
+    <link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-3d">
+        <div class="hero-3d-container">
+            <div class="hero-3d-box">
+                <div class="hero-3d-content">
+                    <h1>Contact Us</h1>
+                    <p>Discover the best deals on your dream car with KKM Cars. Quality vehicles at competitive prices.
+                    </p>
+                    <!-- <div class="hero-buttons">
+                        <a href="buy.html" class="btn btn-primary">Browse Cars</a>
+                        <a href="sell.html" class="btn btn-secondary">Sell Your Car</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact-grid-section">
+        <div class="contact-grid">
+
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>
+                    Have questions about our cars or services? Feel free to reach out to us through any of the following channels. Our team is here to help!
+                </p>
+
+                <!-- Phone Card - Opens Dialer -->
+                <div class="info-card" onclick="contactPhone()">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+91 98765 43210<br>Mon–Sat, 9AM – 7PM</p>
+                    </div>
+                </div>
+
+                <!-- Email Card - Opens Email -->
+                <div class="info-card" onclick="contactEmail()">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@kkmcars.com<br>We'll respond within 24 hours</p>
+                    </div>
+                </div>
+
+                <!-- Address Card - Opens Google Maps -->
+                <div class="info-card" onclick="contactLocation()">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <h4>Visit Our Showroom</h4>
+                        <p>
+                            123 Auto Plaza, Andheri West<br> Mumbai, Maharashtra 400053
+                        </p>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Card - Opens WhatsApp only on Chat Now button -->
+                <div class="info-card">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <div>
+                        <h4>WhatsApp</h4>
+                        <p>+91 98765 43210</p>
+                        <button class="chat-btn" onclick="contactWhatsApp(event);">Chat Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side – Form -->
+            <div class="contact-form-box">
+                <h2>Send us a Message</h2>
+                <form class="contact-form" id="contactForm">
+                    <label>Name</label>
+                    <input type="text" id="contactName" placeholder="Your name" required />
+
+                    <label>Email</label>
+                    <input type="email" id="contactEmail" placeholder="your.email@example.com" required />
+
+                    <label>Phone</label>
+                    <input type="text" id="contactPhone" placeholder="Your phone number" />
+
+                    <label>Message</label>
+                    <textarea id="contactMessage" rows="4" placeholder="How can we help you?"></textarea>
+
+                    <button type="submit" class="send-btn">Send Message</button>
+                </form>
+                <div id="formMessage"></div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.3571990910856!2d72.8355!3d19.1232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b64b0a55bfb3%3A0xf3e05850bb8c2c8!2sAndheri%20West!5e0!3m2!1sen!2sin!4v1696258432456!5m2!1sen!2sin"
+                allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        // Direct Contact Functions
+        function contactPhone() {
+            window.location.href = "tel:+919876543210";
+        }
+
+        function contactEmail() {
+            const email = "info@kkmcars.com";
+            const subject = "Inquiry from KKM Cars";
+            const body = "Hi,\n\nI would like to inquire about your services.\n\nThank you!";
+
+            // Try to open default email client
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Show feedback message
+            alert("Opening your email client...\n\nIf it doesn't open, you can email us at: " + email);
+        }
+
+        function contactWhatsApp(event) {
+            event.preventDefault();
+            const phoneNumber = "919876543210";
+            const message = "Hi! I'm interested in KKM Cars services.";
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+
+        function contactLocation() {
+            const latitude = 19.1232;
+            const longitude = 72.8355;
+            const address = "123 Auto Plaza, Andheri West, Mumbai, Maharashtra 400053";
+            // Opens Google Maps
+            window.open(`https://www.google.com/maps/search/${encodeURIComponent(address)}`, "_blank");
+        }
+
+        // Contact Form Submission
+        document.getElementById("contactForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("contactName").value.trim();
+            const email = document.getElementById("contactEmail").value.trim();
+            const phone = document.getElementById("contactPhone").value.trim();
+            const message = document.getElementById("contactMessage").value.trim();
+            const formMessage = document.getElementById("formMessage");
+
+            // Validation
+            if (!name || !email || !message) {
+                formMessage.innerHTML = '<p style="color: red;">Please fill in all required fields.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:5000/api/contact", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        message: message
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    formMessage.innerHTML = '<p style="color: green;"> ' + data.msg + '</p>';
+                    document.getElementById("contactForm").reset();
+                    setTimeout(() => {
+                        formMessage.innerHTML = '';
+                    }, 5000);
+                } else {
+                    formMessage.innerHTML = '<p style="color: red;"> ' + data.msg + '</p>';
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                formMessage.innerHTML = '<p style="color: red;"> Error sending message. Please try again.</p>';
+            }
+        });
+    </script>
+</body>
+
+</html>

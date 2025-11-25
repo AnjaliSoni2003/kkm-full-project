@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sell Your Car | KKMCars</title>
+    <link rel="stylesheet" href="assets/css/sell.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</head>
+
+<body>
+
+    <!-- Sell Hero Section -->
+    <section class="hero-3d">
+        <div class="hero-3d-container">
+            <div class="hero-3d-box">
+                <div class="hero-3d-content">
+                    <h1>Sell Your Car Easily & Securely</h1>
+                    <p>Submit your car details and get the best offer instantly!</p>
+                    <div class="hero-buttons">
+                        <a href="#sell-form" class="start-selling-btn">Start Selling →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Sell Form Section -->
+    <section id="sell-form" class="sell-form-section">
+        <div class="form-container">
+            <h2>Enter Car Details</h2>
+
+            <!-- Success/Error Messages -->
+            <div id="successMessage" class="message-box success-box"></div>
+            <div id="errorMessage" class="message-box error-box"></div>
+
+            <form id="sellForm" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Owner Name</label>
+                        <input type="text" id="name" name="name" placeholder="Owner name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="num">Contact Number</label>
+                        <input type="tel" id="num" name="num" placeholder="Mobile number" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input type="email" id="mail" name="mail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brand">Car Brand</label>
+                        <input type="text" id="brand" name="brand" placeholder="e.g., Toyota" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Car Model</label>
+                        <input type="text" id="model" name="model" placeholder="e.g., Corolla" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Manufacture Year</label>
+                        <input type="number" id="year" name="year" placeholder="e.g., 2021" required min="1900" max="2025">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Expected Price (₹)</label>
+                        <input type="number" id="price" name="price" placeholder="e.g., 1500000" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage">Mileage (in km)</label>
+                        <input type="number" id="mileage" name="mileage" placeholder="e.g., 45000" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="fuel">Fuel Type</label>
+                        <select id="fuel" name="fuel" required>
+                            <option value="">Select Fuel Type</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="image">Upload Car Image</label>
+                        <input type="file" id="image" name="image" accept="image/*" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="desc">Additional Description</label>
+                        <textarea id="desc" name="desc" placeholder="Describe your car (condition, features, etc.)..." rows="4"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-car-btn" id="submitBtn">Submit for Review</button>
+            </form>
+        </div>
+    </section>
+    <script src="assets/js/script.js"></script>
+
+
+    <script>
+        // API Base URL - works for both localhost:5500 and 127.0.0.1:5000
+        const API_BASE = "http://127.0.0.1:5000/api";
+
+        // Get DOM elements
+        const sellForm = document.getElementById("sellForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const successMessage = document.getElementById("successMessage");
+        const errorMessage = document.getElementById("errorMessage");
+        const formSection = document.querySelector('.sell-form-section');
+        const formContainer = document.querySelector('.form-container');
+
+        // Force form visibility on page load
+        function ensureFormVisible() {
+            if (sellForm) {
+                sellForm.style.display = 'block';
+                sellForm.style.visibility = 'visible';
+                sellForm.style.opacity = '1';
+            }
+            if (formSection) {
+                formSection.style.display = 'block';
+                formSection.style.visibility = 'visible';
+                formSection.style.opacity = '1';
+            }
+            if (formContainer) {
+                formContainer.style.display = 'block';
+                formContainer.style.visibility = 'visible';
+                formContainer.style.opacity = '1';
+            }
+            console.log(" Form visibility ensured");
+        }
+
+        // Call on page load
+        ensureFormVisible();
+
+        // Show success message
+        function showSuccess(message) {
+            console.log("Success:", message);
+            successMessage.textContent = message;
+            successMessage.style.display = "block";
+            errorMessage.style.display = "none";
+
+            // Ensure form stays visible
+            ensureFormVisible();
+
+            // Hide message after 7 seconds
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 7000);
+        }
+
+        // Show error message
+        function showError(message) {
+            console.error(" Error:", message);
+            errorMessage.textContent = message;
+            errorMessage.style.display = "block";
+            successMessage.style.display = "none";
+
+            // Ensure form stays visible
+            ensureFormVisible();
+
+            // Hide message after 7 seconds
+            setTimeout(() => {
+                errorMessage.style.display = "none";
+            }, 7000);
+        }
+
+        // Validate file size (max 5MB)
+        function validateFileSize(file) {
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            if (file.size > maxSize) {
+                showError("Image size should be less than 5MB");
+                return false;
+            }
+            return true;
+        }
+
+        // Form submission handler
+        sellForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            console.log(" Form submitted");
+
+            // Validate image file
+            const imageInput = document.getElementById("image");
+            if (imageInput.files.length === 0) {
+                showError("Please select an image file");
+                return;
+            }
+
+            const imageFile = imageInput.files[0];
+            if (!validateFileSize(imageFile)) {
+                return;
+            }
+
+            // Create FormData
+            const formData = new FormData(this);
+
+            // Log form data for debugging
+            console.log(" Form Data:");
+            for (let [key, value] of formData.entries()) {
+                if (value instanceof File) {
+                    console.log(`${key}: ${value.name} (${value.size} bytes)`);
+                } else {
+                    console.log(`${key}: ${value}`);
+                }
+            }
+
+            // Disable submit button
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = "Submitting...";
+            submitBtn.disabled = true;
+
+            try {
+                console.log(`Sending POST request to: ${API_BASE}/sell_request`);
+
+                const response = await fetch(`${API_BASE}/sell_request`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                console.log("Response status:", response.status);
+
+                const data = await response.json();
+                console.log(" Response data:", data);
+
+                if (response.ok && data.ok) {
+                    showSuccess(" Car submission successful! Your request is under review. We'll contact you soon.");
+
+                    // Reset form after 1 second
+                    setTimeout(() => {
+                        sellForm.reset();
+                        // Ensure form is still visible after reset
+                        ensureFormVisible();
+                        console.log(" Form reset - ready for new submission");
+                    }, 1000);
+                } else {
+                    showError(data.msg || " Failed to submit. Please try again.");
+                }
+            } catch (err) {
+                console.error("Network error:", err);
+                showError(" Cannot connect to server. Please check if the Flask server is running.");
+            } finally {
+                // Re-enable submit button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+
+                // Ensure form stays visible
+                ensureFormVisible();
+            }
+        });
+
+        // Prevent newsletter form from submitting
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert("Newsletter subscription will be available soon!");
+            });
+        }
+
+        // Monitor for any changes that might hide the form
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' &&
+                    (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+                    ensureFormVisible();
+                }
+            });
+        });
+
+        // Start observing the form section
+        if (formSection) {
+            observer.observe(formSection, {
+                attributes: true,
+                attributeOldValue: true,
+                subtree: true
+            });
+        }
+
+        // Log page load
+        console.log("Sell page loaded");
+        console.log(" API Base URL:", API_BASE);
+
+        // Double-check form visibility after a short delay
+        setTimeout(ensureFormVisible, 100);
+    </script>
+
+</body>
+
+</html>

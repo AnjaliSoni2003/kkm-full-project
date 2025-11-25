@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy Cars | KKMCars</title>
+    <link rel="stylesheet" href="assets/css/buy.css" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ===== Car Grid & Card CSS ===== */
+        
+        .car-listings {
+            background: #fff;
+            padding: 80px 60px;
+        }
+        
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 380px));
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 40px auto;
+            width: 100%;
+            max-width: 1300px;
+        }
+        
+        .car-grid:has(.car-card:only-child) {
+            grid-template-columns: repeat(auto-fit, minmax(380px, 380px));
+            justify-content: center;
+        }
+        
+        .car-card {
+            background: #f9f9f9;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            width: 380px;
+            height: 394px;
+            margin: 0 auto;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .car-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .car-info {
+            padding: 20px;
+            height: calc(394px - 200px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .car-info h3 {
+            font-size: 1.2rem;
+            color: #111;
+            margin-bottom: 5px;
+        }
+        
+        .car-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .car-info .price {
+            font-weight: bold;
+            color: #6999f8;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .details-btn {
+            display: inline-block;
+            background-color: #ffb400;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.3s;
+            align-self: flex-start;
+        }
+        
+        .details-btn:hover {
+            background-color: black;
+        }
+        
+        .no-cars {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 50px;
+        }
+        /* ===== Pagination Styles ===== */
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0 20px;
+            flex-wrap: wrap;
+        }
+        
+        .pagination button {
+            padding: 10px 16px;
+            border: 2px solid #ddd;
+            background: #fff;
+            color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 45px;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #ffb400;
+            color: #fff;
+            border-color: #ffb400;
+            transform: translateY(-2px);
+        }
+        
+        .pagination button.active {
+            background: #ffb400;
+            color: #fff;
+            border-color: #ffb400;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+        
+        .pagination .page-info {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0 10px;
+        }
+        /* Responsive pagination */
+        
+        @media (max-width: 768px) {
+            .pagination button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+                min-width: 40px;
+            }
+            .pagination .page-info {
+                font-size: 0.85rem;
+                width: 100%;
+                text-align: center;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar will be injected here by script.js -->
+
+    <!-- Hero Section -->
+    <section class="hero-3d">
+        <div class="hero-3d-container">
+            <div class="hero-3d-box">
+                <div class="hero-3d-content">
+                    <h1>Find Your Perfect Car</h1>
+                    <div class="search-bar">
+                        <select id="brand">
+                            <option value="">All Brands</option>
+                        </select>
+                        <select id="model">
+                            <option value="">Any Models</option>
+                        </select>
+                        <select id="year">
+                            <option value="">All Years</option>
+                        </select>
+                        <select id="price">
+                            <option value="">All Prices</option>
+                            <option value="below-10">Below ₹10,00,000</option>
+                            <option value="10-25">₹10,00,000 - ₹25,00,000</option>
+                            <option value="25-50">₹25,00,000 - ₹50,00,000</option>
+                            <option value="above-50">Above ₹50,00,000</option>
+                        </select>
+                        <button class="search-btn" onclick="searchCars()">Search Cars</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Car Listings -->
+    <section class="car-listings">
+        <h2>Explore Available Cars</h2>
+        <div id="carsContainer" class="car-grid"></div>
+        <div id="noCars" class="no-cars" style="display:none;"></div>
+
+        <!-- Pagination Controls -->
+        <div id="paginationContainer" class="pagination" style="display:none;"></div>
+    </section>
+
+    <!-- IMPORTANT: Load script.js FIRST -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- Buy Page Specific Scripts -->
+    <script>
+        // Set flag BEFORE script.js DOMContentLoaded fires
+        window.isBuyPage = true;
+
+        const API_BASE_BUY = "http://127.0.0.1:5000";
+        let allCars = [];
+        let filteredCars = [];
+        let currentPage = 1;
+        const CARS_PER_PAGE = 9;
+
+        // Initialize buy page - called by script.js after header loads
+        window.initBuyPageCars = async function() {
+            console.log("Starting Buy Page Car Initialization...");
+
+            try {
+                await loadCars();
+                populateDropdowns();
+                console.log("Buy Page Cars Loaded Successfully");
+            } catch (error) {
+                console.error("Error in initBuyPageCars:", error);
+            }
+        };
+
+        // Load cars from API
+        async function loadCars() {
+            try {
+                const res = await fetch(`${API_BASE_BUY}/api/cars`);
+                if (!res.ok) throw new Error(`Server returned ${res.status}`);
+                allCars = await res.json();
+                filteredCars = allCars;
+                console.log("Loaded cars:", allCars.length);
+                renderCarsWithPagination();
+                return allCars;
+            } catch (err) {
+                console.error("Error loading cars:", err);
+                showNoCars('Error loading cars. Please try again later.');
+                return [];
+            }
+        }
+
+        // Render cars with pagination
+        function renderCarsWithPagination() {
+            const totalPages = Math.ceil(filteredCars.length / CARS_PER_PAGE);
+
+            // Ensure current page is valid
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+            // Calculate start and end indices
+            const startIdx = (currentPage - 1) * CARS_PER_PAGE;
+            const endIdx = startIdx + CARS_PER_PAGE;
+            const carsToShow = filteredCars.slice(startIdx, endIdx);
+
+            // Render cars
+            renderCars(carsToShow);
+
+            // Render pagination
+            renderPagination(totalPages);
+        }
+
+        // Render cars in the grid
+        function renderCars(carsToRender) {
+            const container = document.getElementById('carsContainer');
+            const noCarsMsg = document.getElementById('noCars');
+
+            if (!container) {
+                console.error("Container not found!");
+                return;
+            }
+
+            container.innerHTML = '';
+
+            if (!carsToRender || carsToRender.length === 0) {
+                showNoCars('No cars available matching your filters.');
+                return;
+            }
+
+            noCarsMsg.style.display = 'none';
+
+            carsToRender.forEach(car => {
+                const card = document.createElement('div');
+                card.className = 'car-card';
+
+                const imgSrc = (car.images && car.images.length) ? car.images[0] : 'assets/images/placeholder.jpg';
+
+                card.innerHTML = `
+                    <img src="${imgSrc}" alt="${escapeHtml(car.name)}" onerror="this.src='assets/images/placeholder.jpg'">
+                    <div class="car-info">
+                        <h3>${escapeHtml(car.name)}</h3>
+                        <p>${escapeHtml((car.fuel_type || '') + (car.transmission ? ' • ' + car.transmission : '') + (car.mileage ? ' • ' + car.mileage : ''))}</p>
+                        <span class="price">₹${formatPrice(car.price)}</span>
+                        <a class="details-btn" href="cardetail.html?id=${car.id}">View Details →</a>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            console.log("Rendered", carsToRender.length, "cars on page", currentPage);
+        }
+
+        // Render pagination controls
+        function renderPagination(totalPages) {
+            const paginationContainer = document.getElementById('paginationContainer');
+
+            if (!paginationContainer) return;
+
+            // Hide pagination if no cars or only one page
+            if (filteredCars.length === 0 || totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            }
+
+            paginationContainer.style.display = 'flex';
+            paginationContainer.innerHTML = '';
+
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '← Prev';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => goToPage(currentPage - 1);
+            paginationContainer.appendChild(prevBtn);
+
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            // Adjust start if we're near the end
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+
+            // First page
+            if (startPage > 1) {
+                const firstBtn = document.createElement('button');
+                firstBtn.textContent = '1';
+                firstBtn.onclick = () => goToPage(1);
+                paginationContainer.appendChild(firstBtn);
+
+                if (startPage > 2) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.className = 'page-info';
+                    paginationContainer.appendChild(dots);
+                }
+            }
+
+            // Page number buttons
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                pageBtn.className = i === currentPage ? 'active' : '';
+                pageBtn.onclick = () => goToPage(i);
+                paginationContainer.appendChild(pageBtn);
+            }
+
+            // Last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const dots = document.createElement('span');
+                    dots.textContent = '...';
+                    dots.className = 'page-info';
+                    paginationContainer.appendChild(dots);
+                }
+
+                const lastBtn = document.createElement('button');
+                lastBtn.textContent = totalPages;
+                lastBtn.onclick = () => goToPage(totalPages);
+                paginationContainer.appendChild(lastBtn);
+            }
+
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = 'Next →';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => goToPage(currentPage + 1);
+            paginationContainer.appendChild(nextBtn);
+
+            // Page info
+            const pageInfo = document.createElement('span');
+            pageInfo.className = 'page-info';
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            paginationContainer.appendChild(pageInfo);
+        }
+
+        // Go to specific page
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredCars.length / CARS_PER_PAGE);
+
+            if (page < 1 || page > totalPages) return;
+
+            currentPage = page;
+            renderCarsWithPagination();
+            scrollToResults();
+        }
+
+        // Show no cars message
+        function showNoCars(message) {
+            const container = document.getElementById('carsContainer');
+            const noCarsMsg = document.getElementById('noCars');
+            const paginationContainer = document.getElementById('paginationContainer');
+
+            container.innerHTML = '';
+            noCarsMsg.textContent = message;
+            noCarsMsg.style.display = 'block';
+            paginationContainer.style.display = 'none';
+        }
+
+        // Populate brand, model, and year dropdowns
+        function populateDropdowns() {
+            if (!allCars.length) {
+                console.log("No cars to populate dropdowns");
+                return;
+            }
+
+            const brandSelect = document.getElementById('brand');
+            const modelSelect = document.getElementById('model');
+            const yearSelect = document.getElementById('year');
+
+            // Clear existing options (keep first option)
+            brandSelect.innerHTML = '<option value="">All Brands</option>';
+            modelSelect.innerHTML = '<option value="">Any Models</option>';
+            yearSelect.innerHTML = '<option value="">All Years</option>';
+
+            const brands = [...new Set(allCars.map(c => c.brand).filter(b => b))].sort();
+            brands.forEach(b => {
+                const option = document.createElement('option');
+                option.value = b;
+                option.textContent = b;
+                brandSelect.appendChild(option);
+            });
+
+            const years = [...new Set(allCars.map(c => c.year).filter(y => y))].sort((a, b) => b - a);
+            years.forEach(y => {
+                const option = document.createElement('option');
+                option.value = y;
+                option.textContent = y;
+                yearSelect.appendChild(option);
+            });
+
+            brandSelect.addEventListener('change', updateModels);
+            console.log("Dropdowns populated:", brands.length, "brands,", years.length, "years");
+        }
+
+        // Update models based on selected brand
+        function updateModels() {
+            const brand = document.getElementById('brand').value;
+            const modelSelect = document.getElementById('model');
+            modelSelect.innerHTML = '<option value="">Any Models</option>';
+
+            if (!brand) return;
+
+            const models = [...new Set(allCars.filter(c => c.brand === brand).map(c => c.name))].sort();
+            models.forEach(m => {
+                const option = document.createElement('option');
+                option.value = m;
+                option.textContent = m;
+                modelSelect.appendChild(option);
+            });
+        }
+
+        // Search cars based on filters with proper price range logic
+        function searchCars() {
+            const brand = document.getElementById("brand").value;
+            const model = document.getElementById("model").value;
+            const year = document.getElementById("year").value;
+            const priceRange = document.getElementById("price").value;
+
+            filteredCars = allCars;
+
+            // Filter by brand
+            if (brand) {
+                filteredCars = filteredCars.filter(c => c.brand === brand);
+            }
+
+            // Filter by model
+            if (model) {
+                filteredCars = filteredCars.filter(c => c.name === model);
+            }
+
+            // Filter by year
+            if (year) {
+                filteredCars = filteredCars.filter(c => c.year == year);
+            }
+
+            // Filter by price range
+            if (priceRange) {
+                switch (priceRange) {
+                    case 'below-10':
+                        filteredCars = filteredCars.filter(c => c.price && c.price < 1000000);
+                        break;
+                    case '10-25':
+                        filteredCars = filteredCars.filter(c => c.price && c.price >= 1000000 && c.price <= 2500000);
+                        break;
+                    case '25-50':
+                        filteredCars = filteredCars.filter(c => c.price && c.price > 2500000 && c.price <= 5000000);
+                        break;
+                    case 'above-50':
+                        filteredCars = filteredCars.filter(c => c.price && c.price > 5000000);
+                        break;
+                }
+            }
+
+            console.log("🔍 Search results:", filteredCars.length, "cars");
+
+            // Reset to page 1 when searching
+            currentPage = 1;
+            renderCarsWithPagination();
+            scrollToResults();
+        }
+
+        // Filter by car type
+        function filterByType(type) {
+            filteredCars = allCars.filter(c =>
+                (c.type && c.type.toLowerCase() === type.toLowerCase()) ||
+                (c.name && c.name.toLowerCase().includes(type.toLowerCase()))
+            );
+            console.log("Filter by type:", type, "->", filteredCars.length, "cars");
+
+            currentPage = 1;
+            renderCarsWithPagination();
+            scrollToResults();
+        }
+
+        // Scroll to results section
+        function scrollToResults() {
+            const section = document.querySelector('.car-listings');
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Format price to Indian format
+        function formatPrice(p) {
+            if (p === null || p === undefined) return '--';
+            return Number(p).toLocaleString('en-IN');
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(s) {
+            if (!s) return '';
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+    </script>
+</body>
+
+</html>

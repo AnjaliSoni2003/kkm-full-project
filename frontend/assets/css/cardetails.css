@@ -1,0 +1,608 @@
+/* buy.css - Complete Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    color: #111;
+    padding-top: 90px;
+    background: #f5f5f5;
+    background-image: url(../images/hero_section.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* ======================== RESPONSIVE NAVBAR ======================== */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 1002;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1002;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.menu-btn:hover {
+    color: #ffb400;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #ffb400;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #ffb400;
+}
+
+
+/* Hide mobile sign in button on desktop */
+
+.nav .nav-actions {
+    display: none;
+}
+
+
+/* Show desktop sign in button */
+
+.navbar>.nav-actions {
+    margin-left: 20px;
+}
+
+.submit-btn {
+    background-color: #ffb400;
+    color: #000;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.submit-btn:hover {
+    background-color: #e6a200;
+    transform: translateY(-2px);
+}
+
+
+/* ======================== TABLET RESPONSIVE ======================== */
+
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 12px 4%;
+    }
+    .nav-links {
+        gap: 20px;
+    }
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ======================== MOBILE RESPONSIVE ======================== */
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px;
+    }
+    .navbar {
+        padding: 10px 5%;
+    }
+    .logo img {
+        height: 50px;
+    }
+    /* Hide desktop sign in button on mobile */
+    .navbar>.nav-actions {
+        display: none;
+    }
+    .menu-btn {
+        display: block;
+    }
+    .menu-btn.active i::before {
+        content: "\f00d";
+        /* FontAwesome times/close icon */
+    }
+    .nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 75%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: left 0.4s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+    }
+    .nav.active {
+        left: 0;
+    }
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 20px 0;
+        flex: 1;
+    }
+    .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+    .nav-links a::after {
+        display: none;
+    }
+    .nav-links li:hover {
+        background-color: #fffbf0;
+    }
+    /* Show sign in button inside nav on mobile */
+    .nav .nav-actions {
+        display: block;
+        width: 100%;
+        padding: 20px 30px;
+        margin-top: auto;
+        padding-bottom: 30px;
+        border-top: 1px solid #f0f0f0;
+    }
+    .nav .nav-actions .sign-in-link {
+        display: block;
+        width: 100%;
+    }
+    .nav .nav-actions .submit-btn {
+        width: 100%;
+        padding: 12px 20px;
+        display: block;
+    }
+    /* Overlay when menu is open */
+    .nav.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 100%;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+}
+
+
+/* ======================== SMALL MOBILE RESPONSIVE ======================== */
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 65px;
+    }
+    .navbar {
+        padding: 10px 3%;
+    }
+    .logo img {
+        height: 45px;
+    }
+    .menu-btn {
+        font-size: 1.3rem;
+    }
+    .nav {
+        width: 80%;
+        padding-top: 70px;
+    }
+    .nav-links a {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+    .nav .nav-actions {
+        padding: 15px 20px;
+        padding-bottom: 25px;
+    }
+    .nav .nav-actions .submit-btn {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+    }
+}
+
+
+/* ======================== VERY SMALL SCREENS ======================== */
+
+@media (max-width: 360px) {
+    .logo img {
+        height: 40px;
+    }
+    .menu-btn {
+        font-size: 1.2rem;
+    }
+    .nav {
+        width: 85%;
+    }
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ===== Car Details Section ===== */
+
+.car-details {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 1100px;
+    width: 90%;
+    margin: 40px auto;
+}
+
+
+/* ===== Left: Car Gallery ===== */
+
+.car-gallery {
+    flex: 1;
+    min-width: 0;
+}
+
+.main-image {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.main-image img {
+    width: 100%;
+    border-radius: 10px;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.thumbnail-images {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.thumbnail-images img {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    object-fit: cover;
+    border: 2px solid transparent;
+}
+
+.thumbnail-images img:hover {
+    transform: scale(1.05);
+    border: 2px solid #007bff;
+}
+
+
+/* ===== Right: Car Info ===== */
+
+.car-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.car-info h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #0b0c10;
+}
+
+.car-price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.specs p {
+    margin: 8px 0;
+    color: #444;
+    font-size: 15px;
+}
+
+.specs strong {
+    color: #0b0c10;
+}
+
+
+/* ===== Contact Dealer Form ===== */
+
+.contact-form {
+    background: #f1f5ff;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+}
+
+.contact-form h3 {
+    margin-bottom: 15px;
+    color: #0b0c10;
+    font-size: 1.2rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.contact-form button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: 500;
+}
+
+.contact-form button:hover {
+    background: #0056b3;
+}
+
+
+/* ===== Responsive Design ===== */
+
+
+/* Tablets and smaller laptops */
+
+@media (max-width: 1024px) {
+    .car-details {
+        gap: 30px;
+        padding: 30px;
+        width: 92%;
+    }
+    .car-info h2 {
+        font-size: 1.6rem;
+    }
+    .car-price {
+        font-size: 1.3rem;
+    }
+}
+
+
+/* Small tablets */
+
+@media (max-width: 800px) {
+    body {
+        padding-top: 70px;
+    }
+    .navbar {
+        padding: 12px 4%;
+    }
+    .car-details {
+        flex-direction: column;
+        align-items: center;
+        padding: 25px;
+        width: 94%;
+        gap: 30px;
+        margin: 30px auto;
+    }
+    .car-gallery,
+    .car-info {
+        width: 100%;
+    }
+    .main-image img {
+        height: 280px;
+    }
+    .car-info h2 {
+        font-size: 1.5rem;
+    }
+    .car-price {
+        font-size: 1.25rem;
+    }
+    .nav-links {
+        gap: 20px;
+    }
+}
+
+
+/* Mobile devices */
+
+@media (max-width: 700px) {
+    .car-details {
+        padding: 20px;
+        width: 95%;
+        margin: 20px auto;
+    }
+    .main-image img {
+        height: 240px;
+    }
+    .car-info h2 {
+        font-size: 1.4rem;
+    }
+    .car-price {
+        font-size: 1.2rem;
+    }
+    .specs p {
+        font-size: 14px;
+    }
+    .thumbnail-images img {
+        width: 70px;
+        height: 52px;
+    }
+    .contact-form {
+        padding: 20px;
+    }
+    .contact-form h3 {
+        font-size: 1.1rem;
+    }
+}
+
+
+/* Very small mobile devices */
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 65px;
+    }
+    .car-details {
+        padding: 15px;
+        width: 96%;
+        margin: 15px auto;
+        gap: 20px;
+    }
+    .main-image img {
+        height: 200px;
+    }
+    .car-info h2 {
+        font-size: 1.25rem;
+    }
+    .car-price {
+        font-size: 1.1rem;
+    }
+    .specs p {
+        font-size: 13px;
+        margin: 6px 0;
+    }
+    .thumbnail-images {
+        gap: 8px;
+    }
+    .thumbnail-images img {
+        width: 60px;
+        height: 45px;
+    }
+    .contact-form {
+        padding: 18px;
+    }
+    .contact-form h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+        padding: 10px 12px;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    .contact-form button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+
+/* Extra small devices */
+
+@media (max-width: 360px) {
+    .car-details {
+        padding: 12px;
+    }
+    .main-image img {
+        height: 180px;
+    }
+    .car-info h2 {
+        font-size: 1.15rem;
+    }
+    .thumbnail-images img {
+        width: 55px;
+        height: 40px;
+    }
+}
